@@ -2,27 +2,27 @@
 
 > Kubernetes is an open-source container-orchestration system for automating application deployment, scaling, and management. It was originally designed by Google, and is now maintained by the Cloud Native Computing Foundation.
 
-## Summary 
+## Summary
 
-- [Tools](#tools)
-- [RBAC Configuration](#rbac-configuration)
-    - [Listing Secrets](#listing-secrets)
-    - [Access Any Resource or Verb](#access-any-resource-or-verb)
-    - [Pod Creation](#pod-creation)
-    - [Privilege to Use Pods/Exec](#privilege-to-use-pods-exec)
-    - [Privilege to Get/Patch Rolebindings](#privilege-to-get-patch-rolebindings)
-    - [Impersonating a Privileged Account](#impersonating-a-privileged-account)
-- [Privileged Service Account Token](#privileged-service-account-token)
-- [Interesting endpoints to reach](#interesting-endpoints-to-reach)
-- [API addresses that you should know](#api-addresses-that-you-should-know)
-- [References](#references)
+* [Tools](./#tools)
+* [RBAC Configuration](./#rbac-configuration)
+  * [Listing Secrets](./#listing-secrets)
+  * [Access Any Resource or Verb](./#access-any-resource-or-verb)
+  * [Pod Creation](./#pod-creation)
+  * [Privilege to Use Pods/Exec](./#privilege-to-use-pods-exec)
+  * [Privilege to Get/Patch Rolebindings](./#privilege-to-get-patch-rolebindings)
+  * [Impersonating a Privileged Account](./#impersonating-a-privileged-account)
+* [Privileged Service Account Token](./#privileged-service-account-token)
+* [Interesting endpoints to reach](./#interesting-endpoints-to-reach)
+* [API addresses that you should know](./#api-addresses-that-you-should-know)
+* [References](./#references)
 
 ## Tools
 
 * [kubeaudit](https://github.com/Shopify/kubeaudit) - Audit Kubernetes clusters against common security concerns
-* [kubesec.io](https://kubesec.io/) - Security risk analysis for Kubernetes resources
+* [kubesec.io](https://kubesec.io) - Security risk analysis for Kubernetes resources
 * [kube-bench](https://github.com/aquasecurity/kube-bench) - Checks whether Kubernetes is deployed securely by running [CIS Kubernetes Benchmark](https://www.cisecurity.org/benchmark/kubernetes/)
-* [kube-hunter](https://github.com/aquasecurity/kube-hunter) - Hunt for security weaknesses in Kubernetes clusters 
+* [kube-hunter](https://github.com/aquasecurity/kube-hunter) - Hunt for security weaknesses in Kubernetes clusters
 * [katacoda](https://katacoda.com/courses/kubernetes) - Learn Kubernetes using interactive broser-based scenarios
 
 ## Service Token
@@ -56,8 +56,7 @@ verbs:
 
 ### Pod Creation
 
-Check your right with `kubectl get role system:controller:bootstrap-signer -n kube-system -o yaml`.
-Then create a malicious pod.yaml file.
+Check your right with `kubectl get role system:controller:bootstrap-signer -n kube-system -o yaml`. Then create a malicious pod.yaml file.
 
 ```yaml
 apiVersion: v1
@@ -86,8 +85,7 @@ kubectl exec -it <POD NAME> -n <PODS NAMESPACE> –- sh
 
 ### Privilege to Get/Patch Rolebindings
 
-The purpose of this JSON file is to bind the admin "CluserRole" to the compromised service account. 
-Create a malicious RoleBinging.json file.
+The purpose of this JSON file is to bind the admin "CluserRole" to the compromised service account. Create a malicious RoleBinging.json file.
 
 ```powershell
 {
@@ -146,10 +144,9 @@ curl -v -H "Authorization: Bearer <jwt_token>" https://<master_ip:<port>/apis/ex
 curl -v -H "Authorization: Bearer <jwt_token>" https://<master_ip:<port>/apis/extensions/v1beta1/namespaces/default/daemonsets
 ```
 
+## API addresses that you should know
 
-## API addresses that you should know 
-
-*(External network visibility)*
+_(External network visibility)_
 
 ### cAdvisor
 
@@ -194,10 +191,9 @@ curl -k https://<IP Address>:10255
 http://<external-IP>:10255/pods
 ```
 
-
 ## References
 
-- [Kubernetes Pentest Methodology Part 1 - by Or Ida on August 8, 2019](https://securityboulevard.com/2019/08/kubernetes-pentest-methodology-part-1)
-- [Kubernetes Pentest Methodology Part 2 - by Or Ida on September 5, 2019](https://securityboulevard.com/2019/09/kubernetes-pentest-methodology-part-2)
-- [Kubernetes Pentest Methodology Part 3 - by Or Ida on November 21, 2019](https://securityboulevard.com/2019/11/kubernetes-pentest-methodology-part-3)
-- [Capturing all the flags in BSidesSF CTF by pwning our infrastructure - Hackernoon](https://hackernoon.com/capturing-all-the-flags-in-bsidessf-ctf-by-pwning-our-infrastructure-3570b99b4dd0)
+* [Kubernetes Pentest Methodology Part 1 - by Or Ida on August 8, 2019](https://securityboulevard.com/2019/08/kubernetes-pentest-methodology-part-1)
+* [Kubernetes Pentest Methodology Part 2 - by Or Ida on September 5, 2019](https://securityboulevard.com/2019/09/kubernetes-pentest-methodology-part-2)
+* [Kubernetes Pentest Methodology Part 3 - by Or Ida on November 21, 2019](https://securityboulevard.com/2019/11/kubernetes-pentest-methodology-part-3)
+* [Capturing all the flags in BSidesSF CTF by pwning our infrastructure - Hackernoon](https://hackernoon.com/capturing-all-the-flags-in-bsidessf-ctf-by-pwning-our-infrastructure-3570b99b4dd0)
